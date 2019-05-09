@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>Regle index</title>
+
+{% block body %}
+    <h1>Regle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Texte</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for regle in regles %}
+            <tr>
+                <td>{{ regle.id }}</td>
+                <td>{{ regle.texte }}</td>
+                <td>
+                    <a href="{{ path('regle_show', {'id': regle.id}) }}">show</a>
+                    <a href="{{ path('regle_edit', {'id': regle.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('regle_new') }}">Create new</a>
+{% endblock %}

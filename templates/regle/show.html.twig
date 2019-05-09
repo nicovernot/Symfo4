@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<title>Regle</title>
+
+{% block body %}
+    <h1>Regle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ regle.id }}</td>
+            </tr>
+            <tr>
+                <th>Texte</th>
+                <td>{{ regle.texte }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('regle_index') }}">back to list</a>
+
+    <a href="{{ path('regle_edit', {'id': regle.id}) }}">edit</a>
+
+    {{ include('regle/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New Session</title>
+
+{% block body %}
+    <h1>Create new Session</h1>
+
+    {{ include('session/_form.html.twig') }}
+
+    <a href="{{ path('session_index') }}">back to list</a>
+{% endblock %}
