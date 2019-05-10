@@ -98,4 +98,8 @@ class Regle
 
         return $this;
     }
+
+    public function __toString() {
+        return $this->texte;
+    }
 }
