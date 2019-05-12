@@ -29,6 +29,10 @@
         {% endfor %}
         </tbody>
     </table>
-
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
     <a href="{{ path('session_new') }}">Create new</a>
 {% endblock %}

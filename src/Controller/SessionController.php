@@ -38,7 +38,10 @@ class SessionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($session);
             $entityManager->flush();
-
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
             return $this->redirectToRoute('session_index');
         }
 

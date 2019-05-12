@@ -1,0 +1,4 @@
+App\Entity\Film:
+    film_{1..10}:
+        nom: <name()>
+        session: '@session*'
