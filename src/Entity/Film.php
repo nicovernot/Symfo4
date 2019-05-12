@@ -34,10 +34,6 @@ class Film
      */
     private $regles;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="film")
-     */
-    private $matches;
 
     public function __construct()
     {
@@ -105,36 +101,6 @@ class Film
         return $this;
     }
 
-    /**
-     * @return Collection|Match[]
-     */
-    public function getMatches(): Collection
-    {
-        return $this->matches;
-    }
-
-    public function addMatch(Match $match): self
-    {
-        if (!$this->matches->contains($match)) {
-            $this->matches[] = $match;
-            $match->setFilm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMatch(Match $match): self
-    {
-        if ($this->matches->contains($match)) {
-            $this->matches->removeElement($match);
-            // set the owning side to null (unless already changed)
-            if ($match->getFilm() === $this) {
-                $match->setFilm(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function __toString() {
         return $this->nom;

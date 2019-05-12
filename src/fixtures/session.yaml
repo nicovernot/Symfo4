@@ -1,4 +1,4 @@
-App\Entity\Sesssion:
+App\Entity\Session:
     session_{1..10}:
         nom: <name()>
 

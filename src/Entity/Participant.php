@@ -39,10 +39,6 @@ class Participant
      */
     private $session;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="participant")
-     */
-    private $matches;
 
     public function __construct()
     {
@@ -102,34 +98,4 @@ class Participant
         return $this;
     }
 
-    /**
-     * @return Collection|Match[]
-     */
-    public function getMatches(): Collection
-    {
-        return $this->matches;
-    }
-
-    public function addMatch(Match $match): self
-    {
-        if (!$this->matches->contains($match)) {
-            $this->matches[] = $match;
-            $match->setParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMatch(Match $match): self
-    {
-        if ($this->matches->contains($match)) {
-            $this->matches->removeElement($match);
-            // set the owning side to null (unless already changed)
-            if ($match->getParticipant() === $this) {
-                $match->setParticipant(null);
-            }
-        }
-
-        return $this;
-    }
 }
