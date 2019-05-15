@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\FilmRepository")
  */
 class Film
@@ -24,21 +26,16 @@ class Film
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Session", inversedBy="films")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Session", inversedBy="films")
      */
     private $session;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Regle", mappedBy="film")
-     */
-    private $regles;
 
 
     public function __construct()
     {
-        $this->regles = new ArrayCollection();
+        $this->session = new ArrayCollection();
         $this->matches = new ArrayCollection();
+     
     }
 
     public function getId(): ?int
@@ -58,51 +55,36 @@ class Film
         return $this;
     }
 
-    public function getSession(): ?Session
+    /**
+     * @return Collection|Session[]
+     */
+    public function getSession(): Collection
     {
         return $this->session;
     }
 
-    public function setSession(?Session $session): self
+    public function addSession(Session $session): self
     {
-        $this->session = $session;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Regle[]
-     */
-    public function getRegles(): Collection
-    {
-        return $this->regles;
-    }
-
-    public function addRegle(Regle $regle): self
-    {
-        if (!$this->regles->contains($regle)) {
-            $this->regles[] = $regle;
-            $regle->setFilm($this);
+        if (!$this->session->contains($session)) {
+            $this->session[] = $session;
         }
 
         return $this;
     }
 
-    public function removeRegle(Regle $regle): self
+    public function removeSession(Session $session): self
     {
-        if ($this->regles->contains($regle)) {
-            $this->regles->removeElement($regle);
-            // set the owning side to null (unless already changed)
-            if ($regle->getFilm() === $this) {
-                $regle->setFilm(null);
-            }
+        if ($this->session->contains($session)) {
+            $this->session->removeElement($session);
         }
 
         return $this;
     }
 
+public function __toString()
+{
+    return $this->getNom();
+}
 
-    public function __toString() {
-        return $this->nom;
-    }
+
 }

@@ -1,6 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-
 {% block body %}
     <h1>Session index</h1>
 
@@ -9,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
+                <th>Date</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,6 +17,7 @@
             <tr>
                 <td>{{ session.id }}</td>
                 <td>{{ session.nom }}</td>
+                <td>{{ session.date ? session.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('session_show', {'id': session.id}) }}">show</a>
                     <a href="{{ path('session_edit', {'id': session.id}) }}">edit</a>
@@ -24,15 +25,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice">
-        {{ message }}
-    </div>
-{% endfor %}
+
     <a href="{{ path('session_new') }}">Create new</a>
 {% endblock %}

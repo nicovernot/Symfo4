@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\SessionRepository")
  */
 class Session
@@ -20,32 +21,37 @@ class Session
     private $id;
 
     /**
-     * @Assert\NotBlank
-     *      * @Assert\Length(
-     *      min = 2,
-     *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
-     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Film", mappedBy="session")
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Film", mappedBy="session")
      */
     private $films;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="session")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant", mappedBy="session")
      */
     private $participants;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="session")
+     */
+    private $matches;
 
 
     public function __construct()
     {
         $this->films = new ArrayCollection();
         $this->participants = new ArrayCollection();
+        $this->matches = new ArrayCollection();
+    
        
     }
 
@@ -66,6 +72,18 @@ class Session
         return $this;
     }
 
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Film[]
      */
@@ -78,7 +96,7 @@ class Session
     {
         if (!$this->films->contains($film)) {
             $this->films[] = $film;
-            $film->setSession($this);
+            $film->addSession($this);
         }
 
         return $this;
@@ -88,10 +106,7 @@ class Session
     {
         if ($this->films->contains($film)) {
             $this->films->removeElement($film);
-            // set the owning side to null (unless already changed)
-            if ($film->getSession() === $this) {
-                $film->setSession(null);
-            }
+            $film->removeSession($this);
         }
 
         return $this;
@@ -109,7 +124,7 @@ class Session
     {
         if (!$this->participants->contains($participant)) {
             $this->participants[] = $participant;
-            $participant->setSession($this);
+            $participant->addSession($this);
         }
 
         return $this;
@@ -119,16 +134,46 @@ class Session
     {
         if ($this->participants->contains($participant)) {
             $this->participants->removeElement($participant);
-            // set the owning side to null (unless already changed)
-            if ($participant->getSession() === $this) {
-                $participant->setSession(null);
-            }
+            $participant->removeSession($this);
         }
 
         return $this;
     }
 
-    public function __toString() {
-        return $this->nom;
+public function __toString()
+{
+    return $this->getNom();
+}
+
+/**
+ * @return Collection|Match[]
+ */
+public function getMatches(): Collection
+{
+    return $this->matches;
+}
+
+public function addMatch(Match $match): self
+{
+    if (!$this->matches->contains($match)) {
+        $this->matches[] = $match;
+        $match->setSession($this);
     }
+
+    return $this;
+}
+
+public function removeMatch(Match $match): self
+{
+    if ($this->matches->contains($match)) {
+        $this->matches->removeElement($match);
+        // set the owning side to null (unless already changed)
+        if ($match->getSession() === $this) {
+            $match->setSession(null);
+        }
+    }
+
+    return $this;
+}
+
 }

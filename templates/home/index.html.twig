@@ -15,5 +15,13 @@
   <h1>Movie Game</h1>
   <p>MV is the most popular Game...</p>
 </div>
+
+{% if is_granted('ROLE_ADMIN') %}
+    Administrator
+{% elseif is_granted('ROLE_USER') %}
+    User
+{% else %}
+    Anonymous
+{% endif %}
 </div>
 {% endblock %}

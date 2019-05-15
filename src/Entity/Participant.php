@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
  */
 class Participant
@@ -21,12 +23,12 @@ class Participant
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,15 +36,21 @@ class Participant
     private $mail;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Session", inversedBy="participants")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Session", inversedBy="participants")
      */
     private $session;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="participant")
+     */
+    private $matches;
 
 
     public function __construct()
     {
+        $this->session = new ArrayCollection();
         $this->matches = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -50,26 +58,26 @@ class Participant
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->nom;
+        return $this->firstname;
     }
 
-    public function setNom(string $nom): self
+    public function setFirstname(string $firstname): self
     {
-        $this->nom = $nom;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getLastname(): ?string
     {
-        return $this->prenom;
+        return $this->lastname;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setLastname(string $lastname): self
     {
-        $this->prenom = $prenom;
+        $this->lastname = $lastname;
 
         return $this;
     }
@@ -86,16 +94,64 @@ class Participant
         return $this;
     }
 
-    public function getSession(): ?Session
+    /**
+     * @return Collection|Session[]
+     */
+    public function getSession(): Collection
     {
         return $this->session;
     }
 
-    public function setSession(?Session $session): self
+    public function addSession(Session $session): self
     {
-        $this->session = $session;
+        if (!$this->session->contains($session)) {
+            $this->session[] = $session;
+        }
 
         return $this;
     }
 
+    public function removeSession(Session $session): self
+    {
+        if ($this->session->contains($session)) {
+            $this->session->removeElement($session);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Match[]
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Match $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches[] = $match;
+            $match->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Match $match): self
+    {
+        if ($this->matches->contains($match)) {
+            $this->matches->removeElement($match);
+            // set the owning side to null (unless already changed)
+            if ($match->getParticipant() === $this) {
+                $match->setParticipant(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->getMail();
+    }
 }

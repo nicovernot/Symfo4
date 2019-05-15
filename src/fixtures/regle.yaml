@@ -1,0 +1,4 @@
+App\Entity\Regle:
+    regle_{1..10}:
+        texte: <sentence()>
+        film: '@film_<current()>'

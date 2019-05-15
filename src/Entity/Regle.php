@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\RegleRepository")
  */
 class Regle
@@ -24,12 +26,14 @@ class Regle
     private $texte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Film", inversedBy="regles")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Film", cascade={"persist", "remove"})
      */
     private $film;
 
-   
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Match", mappedBy="regle")
+     */
+    private $matches;
 
     public function __construct()
     {
@@ -65,8 +69,38 @@ class Regle
         return $this;
     }
 
-
-    public function __toString() {
-        return $this->texte;
+    /**
+     * @return Collection|Match[]
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
     }
+
+    public function addMatch(Match $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches[] = $match;
+            $match->setRegle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Match $match): self
+    {
+        if ($this->matches->contains($match)) {
+            $this->matches->removeElement($match);
+            // set the owning side to null (unless already changed)
+            if ($match->getRegle() === $this) {
+                $match->setRegle(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+{
+    return $this->getTexte();
+}
 }

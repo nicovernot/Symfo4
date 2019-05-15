@@ -13,6 +13,9 @@ class SessionType extends AbstractType
     {
         $builder
             ->add('nom')
+            ->add('date')
+            ->add('films')
+            ->add('participants')
         ;
     }
 

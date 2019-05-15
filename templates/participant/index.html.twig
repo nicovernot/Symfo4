@@ -1,6 +1,4 @@
 {% extends 'layout.html.twig' %}
-
-
 {% block body %}
     <h1>Participant index</h1>
 
@@ -8,8 +6,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Mail</th>
                 <th>actions</th>
             </tr>
@@ -18,8 +16,8 @@
         {% for participant in participants %}
             <tr>
                 <td>{{ participant.id }}</td>
-                <td>{{ participant.nom }}</td>
-                <td>{{ participant.prenom }}</td>
+                <td>{{ participant.firstname }}</td>
+                <td>{{ participant.lastname }}</td>
                 <td>{{ participant.mail }}</td>
                 <td>
                     <a href="{{ path('participant_show', {'id': participant.id}) }}">show</a>

@@ -15,6 +15,10 @@
                 <th>Nom</th>
                 <td>{{ session.nom }}</td>
             </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ session.date ? session.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
         </tbody>
     </table>
 

@@ -1,0 +1,10 @@
+App\Entity\User:
+    user:
+        password: '<sprintf("$2y$13$pcOaV5kRpc.G.nX3DiGbE.kwjSAVNCnSFTjTFJvqdLZCTzZJ6v5yu")>'
+        email: admin@admin.com
+        roles: ["ROLE_ADMIN"]
+    user{1..10}:
+        password: '<sprintf("$2y$13$pcOaV5kRpc.G.nX3DiGbE.kwjSAVNCnSFTjTFJvqdLZCTzZJ6v5yu")>'
+        email: <email()>
+        roles: ["ROLE_USER"]
+

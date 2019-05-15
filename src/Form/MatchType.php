@@ -14,8 +14,6 @@ class MatchType extends AbstractType
         $builder
             ->add('session')
             ->add('film')
-            ->add('participant')
-            ->add('regle')
         ;
     }
 
