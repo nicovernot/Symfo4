@@ -30,7 +30,23 @@ class MatchRepository extends ServiceEntityRepository
             ->addSelect('a') 
             ->leftJoin('m.participant', 'v')
             ->addSelect('v')
-            ->andWhere('m.session != :val')
+            ->andWhere('m.participant != :val')
+            ->setParameter('val', $value)
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByGameParticipant($value)
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.session', 'a')
+            ->addSelect('a') 
+            ->leftJoin('m.participant', 'v')
+            ->addSelect('v')
+            ->andWhere('m.participant = :val')
             ->setParameter('val', $value)
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)

@@ -8,16 +8,21 @@
 
 <div class="example-wrapper">
 {{dump(list)}}
-
-
+{{dump(mesjeux)}}
+{{dump(user.participant.id)}}
 </div>
 
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
 
 <div class="container">
  <div class="row">
-  <div class="col">
-  <h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>            
+  <div class="col bg-secondary"">
+  <h2>Matchs en cours</h2>
+  <p>Liste de match disponibles:</p>            
   <table class="table table-striped">
     <thead>
       <tr>
@@ -29,19 +34,19 @@
     <tbody>
       <tr>
        
- {% for liste in list %}
+      {% for liste in list %}
       </tr>
- <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
- <td> <a class="btn btn-info" href="#">Participer</a><br></td>
- </tr>
- {%  endfor %}
+          <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
+          <td> <a class="btn btn-info" href="{{path("matchParticiper",{user: user.participant.id,session: liste.session.id})}}">Participer</a><br></td>
+      </tr>
+      {%  endfor %}
     </tbody>
   </table>
   
   </div>
-  <div class="col">
-    <h2>Striped Rows</h2>
-  <p>The .table-striped class adds zebra-stripes to a table:</p>            
+  <div class="col bg-secondary"">
+    <h2>Mes matchs</h2>
+  <p>List de mes matchs:</p>            
   <table class="table table-striped">
     <thead>
       <tr>
@@ -53,10 +58,10 @@
     <tbody>
       <tr>
        
- {% for liste in list %}
+ {% for liste in mesjeux %}
       </tr>
  <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
- <td> <a class="btn btn-info" href="#">Participer</a><br></td>
+ <td> <a class="btn btn-danger" href="{{path("matchmespartis")}}" >Voir</a><br></td>
  </tr>
  {%  endfor %}
     </tbody>
@@ -66,3 +71,5 @@
 </div> 
 </div>
 {% endblock %}
+
+

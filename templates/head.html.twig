@@ -5,7 +5,7 @@
     </li>
       {% if app.user.username is defined %}
     <li class="nav-item">
-      <a class="nav-link " href="{{path('match')}}">Match</a>
+      <a class="nav-link " href="{{path('match',{user: user.participant.id})}}">Match</a>
     </li>
      <li class="nav-item">
       <a class="nav-link " href="{{path('app_logout')}}">logout</a>

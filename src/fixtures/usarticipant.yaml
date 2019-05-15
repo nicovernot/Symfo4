@@ -1,6 +1,11 @@
 App\Entity\Participant:
-    participant_{1..11}:
+    participant_{1..10}:
         firstname: <name()>
         lastname: <name()>
         mail: '<email()>'
         session: '<numberBetween(1, 10)>x @session*'
+    participant_11:
+        firstname: <name()>
+        lastname: <name()>
+        mail: 'admin@admin.com'
+        session: '<numberBetween(11, 11)>x @session*'    

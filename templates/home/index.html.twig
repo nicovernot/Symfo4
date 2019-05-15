@@ -17,19 +17,21 @@
 </div>
 
 {% if is_granted('ROLE_ADMIN') %}
-   <div class="bg-danger row">
+   <div class="row">
+        <div class="col bg-secondary">
             Tableau de bord admin Ajax
+        </div>
 
         <div class="col bg-dark">
-            <p id="nbm">Nombre de matches</p>
+            <p id="nbm">Matches</p>
         </div>
 
         <div class="col bg-info">
-            <p id="nbp">Nombre de Participants</p>
+            <p id="nbp">Participants</p>
         </div>
 
         <div class="col bg-secondary">
-            <p id="nbf">Nombre de Films</p>
+            <p id="nbf">Films</p>
         </div>
    </div>
    
@@ -57,11 +59,41 @@
         });
     </script>
 {% elseif is_granted('ROLE_USER') %}
-   <div class="bg-success">
-   Mes Match
+   <div class="row">
+        <div class="col bg-secondary">
+            Tableau de bord Participant Ajax
+            <a href="{{path("match")}}" class="btn btn-info"> Aller sur les Matchs </a>
+        </div>
+
+        <div class="col bg-dark">
+            <p id="nbmc">Matches en cours</p>
+        </div>
+
+        <div class="col bg-info">
+            <p id="nbmm">Mes matchs</p>
+        </div>
+      
    </div>
-{% else %}
-    Anonymous
+
+    <script>
+        $(document).ready(function(){
+        
+            $.get("api/matches", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbmc").append(txt2).animate({left: '250px'}, "slow");;
+            console.log(data["hydra:totalItems"]);
+            });
+
+            $.get("api/participants", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbmm").append(txt2);
+            console.log(data["hydra:totalItems"]);
+            });
+
+
+       
+        });
+    </script>
 {% endif %}
 </div>
 {% endblock %}

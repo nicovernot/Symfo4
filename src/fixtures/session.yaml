@@ -1,5 +1,5 @@
 App\Entity\Session:
-    session_{1..10}:
+    session_{1..11}:
         nom: <name()>
         date: <dateTimeBetween("-200 days", "now")>
 

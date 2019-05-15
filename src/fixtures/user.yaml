@@ -3,6 +3,7 @@ App\Entity\User:
         password: '<sprintf("$2y$13$pcOaV5kRpc.G.nX3DiGbE.kwjSAVNCnSFTjTFJvqdLZCTzZJ6v5yu")>'
         email: admin@admin.com
         roles: ["ROLE_ADMIN"]
+        participant: '@participant_11'
     user{1..10}:
         password: '<sprintf("$2y$13$pcOaV5kRpc.G.nX3DiGbE.kwjSAVNCnSFTjTFJvqdLZCTzZJ6v5yu")>'
         email: '@participant_<current()>'
