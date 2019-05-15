@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
- * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
@@ -38,6 +37,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $participant;
 
     public function getId(): ?int
     {
@@ -118,5 +122,23 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $participant === null ? null : $this;
+        if ($newUser !== $participant->getUser()) {
+            $participant->setUser($newUser);
+        }
+
+        return $this;
     }
 }

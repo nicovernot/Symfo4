@@ -10,8 +10,59 @@
 {{dump(list)}}
 
 
+</div>
+
+
+<div class="container">
+ <div class="row">
+  <div class="col">
+  <h2>Striped Rows</h2>
+  <p>The .table-striped class adds zebra-stripes to a table:</p>            
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Session</th>
+        <th>Lien</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+       
  {% for liste in list %}
- Session {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }} <a class="btn btn-info" href="#">Participer</a><br>
+      </tr>
+ <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
+ <td> <a class="btn btn-info" href="#">Participer</a><br></td>
+ </tr>
  {%  endfor %}
+    </tbody>
+  </table>
+  
+  </div>
+  <div class="col">
+    <h2>Striped Rows</h2>
+  <p>The .table-striped class adds zebra-stripes to a table:</p>            
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Session</th>
+        <th>Lien</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+       
+ {% for liste in list %}
+      </tr>
+ <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
+ <td> <a class="btn btn-info" href="#">Participer</a><br></td>
+ </tr>
+ {%  endfor %}
+    </tbody>
+  </table>
+  </div>
+ 
+</div> 
 </div>
 {% endblock %}

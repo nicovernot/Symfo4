@@ -7,8 +7,24 @@
     <li class="nav-item">
       <a class="nav-link " href="{{path('match')}}">Match</a>
     </li>
+     <li class="nav-item">
+      <a class="nav-link " href="{{path('app_logout')}}">logout</a>
       {% endif %}
-      {% if is_granted('ROLE_ADMIN')%}
+      {% if app.user.username is not defined %}
+      <a class="nav-link " href="{{path('app_login')}}">login</a>
+    </li>
+      <li class="nav-item">
+      <a class="nav-link " href="{{path('log_on')}}">S'inscrire</a>
+    </li>
+      {% endif %}
+
+  </ul>
+</nav>
+
+<nav class="navbar navbar-expand-sm bg-success navbar-dark">
+  <ul class="navbar-nav">
+        {% if is_granted('ROLE_ADMIN')%}
+        <a class="navbar-brand" href="#">Admin bar</a>
     <li class="nav-item">
       <a class="nav-link" href="{{path('session_index')}}">session</a>
     </li>
@@ -21,16 +37,9 @@
     <li class="nav-item">
       <a class="nav-link" href="{{path('participant_index')}}">participant</a>
     </li>
-   
-      <li class="nav-item">
-      <a class="nav-link " href="{{path('app_logout')}}">logout</a>
-      {% endif %}
-      {% if app.user.username is not defined %}
-      <a class="nav-link " href="{{path('app_login')}}">login</a>
-    </li>
-      <li class="nav-item">
-      <a class="nav-link " href="{{path('log_on')}}">S'inscrire</a>
+        <li class="nav-item">
+      <a class="nav-link" href="{{path('easyadmin')}}">Admin User / Match</a>
     </li>
       {% endif %}
-  </ul>
+       </ul>
 </nav>

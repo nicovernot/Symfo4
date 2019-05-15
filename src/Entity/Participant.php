@@ -45,6 +45,11 @@ class Participant
      */
     private $matches;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="participant", cascade={"persist", "remove"})
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -153,5 +158,17 @@ class Participant
     public function __toString()
     {
         return $this->getMail();
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

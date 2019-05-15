@@ -17,9 +17,49 @@
 </div>
 
 {% if is_granted('ROLE_ADMIN') %}
-    Administrator
+   <div class="bg-danger row">
+            Tableau de bord admin Ajax
+
+        <div class="col bg-dark">
+            <p id="nbm">Nombre de matches</p>
+        </div>
+
+        <div class="col bg-info">
+            <p id="nbp">Nombre de Participants</p>
+        </div>
+
+        <div class="col bg-secondary">
+            <p id="nbf">Nombre de Films</p>
+        </div>
+   </div>
+   
+    <script>
+        $(document).ready(function(){
+        
+            $.get("api/matches", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbm").append(txt2).animate({left: '250px'}, "slow");;
+            console.log(data["hydra:totalItems"]);
+            });
+
+            $.get("api/participants", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbp").append(txt2);
+            console.log(data["hydra:totalItems"]);
+            });
+
+            $.get("api/films", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbf").append(txt2);
+            console.log(data["hydra:totalItems"]);
+            });
+       
+        });
+    </script>
 {% elseif is_granted('ROLE_USER') %}
-    User
+   <div class="bg-success">
+   Mes Match
+   </div>
 {% else %}
     Anonymous
 {% endif %}

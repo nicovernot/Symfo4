@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Entity;
-
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\MatchRepository")
+ * @ApiFilter(SearchFilter::class, properties={"participant": "exact", "session": "exact", "regle": "exact"})
  * @ORM\Table(name="`match`")
  */
 class Match 

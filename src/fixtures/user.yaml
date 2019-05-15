@@ -5,6 +5,7 @@ App\Entity\User:
         roles: ["ROLE_ADMIN"]
     user{1..10}:
         password: '<sprintf("$2y$13$pcOaV5kRpc.G.nX3DiGbE.kwjSAVNCnSFTjTFJvqdLZCTzZJ6v5yu")>'
-        email: <email()>
+        email: '@participant_<current()>'
         roles: ["ROLE_USER"]
+        participant: '@participant_<current()>'
 
