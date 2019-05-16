@@ -5,7 +5,7 @@
     </li>
       {% if app.user.username is defined %}
     <li class="nav-item">
-      <a class="nav-link " href="{{path('match',{user: user.participant.id})}}">Match</a>
+      <a class="nav-link " href="{{path('match',{user: user.participant.id is defined? user.participant.id:app.request.query.get("user") })}}">Match</a>
     </li>
      <li class="nav-item">
       <a class="nav-link " href="{{path('app_logout')}}">logout</a>
@@ -37,8 +37,11 @@
     <li class="nav-item">
       <a class="nav-link" href="{{path('participant_index')}}">participant</a>
     </li>
-        <li class="nav-item">
+    <li class="nav-item">
       <a class="nav-link" href="{{path('easyadmin')}}">Admin User / Match</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{path('api_entrypoint')}}">Api</a>
     </li>
       {% endif %}
        </ul>

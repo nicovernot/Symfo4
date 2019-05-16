@@ -28,6 +28,7 @@ class ParticipantController extends AbstractController
     {
         return $this->render('participant/index.html.twig', [
             'participants' => $participantRepository->findAll(),
+            'user'=>$this->getUser(),
         ]);
     }
 

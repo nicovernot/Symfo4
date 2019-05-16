@@ -22,7 +22,7 @@
             Tableau de bord admin Ajax
         </div>
 
-        <div class="col bg-dark">
+        <div class="col bg-success">
             <p id="nbm">Matches</p>
         </div>
 
@@ -62,10 +62,10 @@
    <div class="row">
         <div class="col bg-secondary">
             Tableau de bord Participant Ajax
-            <a href="{{path("match")}}" class="btn btn-info"> Aller sur les Matchs </a>
+            <a href="{{path("match",{user:user.participant.id})}}" class="btn btn-info"> Aller sur les Matchs </a>
         </div>
 
-        <div class="col bg-dark">
+        <div class="col bg-success">
             <p id="nbmc">Matches en cours</p>
         </div>
 

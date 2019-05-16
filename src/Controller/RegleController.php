@@ -28,6 +28,7 @@ class RegleController extends AbstractController
     {
         return $this->render('regle/index.html.twig', [
             'regles' => $regleRepository->findAll(),
+            'user'=>$this->getUser(),
         ]);
     }
 

@@ -1,7 +1,20 @@
 easy_admin:
+    site_name: '<strong>Movie Drinking Game</strong>'
+    user:
+        display_name: true
+        display_avatar: true
     entities:
 #        # List the entity class name you want to manage
         - App\Entity\User
+
         - App\Entity\Match
+    design:
+        brand_color: 'bg-secondary'
+        menu:
+            - { label: 'Home', route: 'home' }
+            - { label: 'Utilisateurs', role: ROLE_SUPER_ADMIN, icon: 'user-circle-o', children: [ { label: 'Utilisateurs', entity: 'User', icon: 'user' } ] }
+            - Match
+
+
 
 #        - App\Entity\User

@@ -7,13 +7,9 @@
 </style>
 
 <div class="example-wrapper">
-{{dump(list)}}
-{{dump(mesjeux)}}
-{{dump(user.participant.id)}}
 </div>
-
 {% for message in app.flashes('notice') %}
-    <div class="flash-notice">
+    <div class="flash-notice bg-info">
         {{ message }}
     </div>
 {% endfor %}
@@ -36,8 +32,7 @@
        
       {% for liste in list %}
       </tr>
-          <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
-          <td> <a class="btn btn-info" href="{{path("matchParticiper",{user: user.participant.id,session: liste.session.id})}}">Participer</a><br></td>
+          <td> {{liste.nom~"  "~liste.date|date("m/d/Y") }}</td>       <td> <a class="btn btn-info" href="{{path("matchParticiper",{user: user.participant.id,session: liste.id})}}">Participer</a><br></td>
       </tr>
       {%  endfor %}
     </tbody>
@@ -60,8 +55,8 @@
        
  {% for liste in mesjeux %}
       </tr>
- <td> {{liste.session.nom~"  "~liste.session.date|date("m/d/Y") }}</td>
- <td> <a class="btn btn-danger" href="{{path("matchmespartis")}}" >Voir</a><br></td>
+ <td> {{liste.nom~"  "~liste.date|date("m/d/Y") }}</td>
+ <td> <a class="btn btn-danger" href="{{path("matchmespartis",{user: user.participant.id,session: liste.id})}}" >Voir</a><br></td>
  </tr>
  {%  endfor %}
     </tbody>
@@ -70,6 +65,7 @@
  
 </div> 
 </div>
+
 {% endblock %}
 
 
