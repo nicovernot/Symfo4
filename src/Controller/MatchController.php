@@ -120,14 +120,4 @@ class MatchController extends AbstractController
         ]);
     }
 
-         /**
-     * @Route("/match/count", name="matchcount")
-     */
-    public function matchcount(Request $request)
-    {
-        $session = $request->query->get('session');
-        $user = $request->query->get('user');
-        return $this->redirectToRoute('matchencours', array('session' => $session, 'user' => $user), 301);
-    }    
-
 }
