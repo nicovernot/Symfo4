@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Participant;
 use App\Entity\Regle;
 use Doctrine\DBAL\Driver\Connection;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class MatchController extends AbstractController
 {
@@ -98,8 +100,17 @@ class MatchController extends AbstractController
      /**
      * @Route("/match/mesparties/match-encours", name="matchencours")
      */
-    public function matchencours(MatchRepository $matchrepo,Request $request)
+    public function matchencours(MatchRepository $matchrepo,Request $request,SessionInterface $session1)
     {
+        $match= $request->query->get('match');
+        if (isset($match)) {
+            $count = $session1->get("count$match");
+            $session1->set("count",$match);
+            if (isset($count)) {
+                $count = $count+1;
+                $session1->set("count$match",$count);
+            }
+        }
         $user= $request->query->get('user');
         $session = $request->query->get("session");
         return $this->render('match/matchencours.html.twig', [
@@ -108,5 +119,15 @@ class MatchController extends AbstractController
             'sess'=>"sess",
         ]);
     }
+
+         /**
+     * @Route("/match/count", name="matchcount")
+     */
+    public function matchcount(Request $request)
+    {
+        $session = $request->query->get('session');
+        $user = $request->query->get('user');
+        return $this->redirectToRoute('matchencours', array('session' => $session, 'user' => $user), 301);
+    }    
 
 }

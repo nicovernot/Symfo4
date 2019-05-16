@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}MDG Movie Drinking Game{% endblock %}
 
 {% block body %}
 <style>
@@ -13,7 +13,7 @@
 
 <div class="jumbotron">
   <h1>Movie Game</h1>
-  <p>MV is the most popular Game...</p>
+  <p>MVG is the most popular Game...</p>
 </div>
 
 {% if is_granted('ROLE_ADMIN') %}
@@ -35,29 +35,7 @@
         </div>
    </div>
    
-    <script>
-        $(document).ready(function(){
-        
-            $.get("api/matches", function(data, status){
-            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
-            $("#nbm").append(txt2).animate({left: '250px'}, "slow");;
-            console.log(data["hydra:totalItems"]);
-            });
-
-            $.get("api/participants", function(data, status){
-            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
-            $("#nbp").append(txt2);
-            console.log(data["hydra:totalItems"]);
-            });
-
-            $.get("api/films", function(data, status){
-            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
-            $("#nbf").append(txt2);
-            console.log(data["hydra:totalItems"]);
-            });
-       
-        });
-    </script>
+{% include "admscr.html.twig" %}
 {% elseif is_granted('ROLE_USER') %}
    <div class="row">
         <div class="col bg-secondary">
@@ -74,26 +52,8 @@
         </div>
       
    </div>
-
-    <script>
-        $(document).ready(function(){
-        
-            $.get("api/matches", function(data, status){
-            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
-            $("#nbmc").append(txt2).animate({left: '250px'}, "slow");;
-            console.log(data["hydra:totalItems"]);
-            });
-
-            $.get("api/participants", function(data, status){
-            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
-            $("#nbmm").append(txt2);
-            console.log(data["hydra:totalItems"]);
-            });
-
-
-       
-        });
-    </script>
+{% include "usrscr.html.twig" %}
+    
 {% endif %}
 </div>
 {% endblock %}

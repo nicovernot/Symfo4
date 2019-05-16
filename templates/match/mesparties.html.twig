@@ -2,42 +2,49 @@
 
 {% block body %}
 
-mes parties 
-<pre>
-    {{ dump(sess) }}
-    {{ dump(list) }}
-</pre>
+<h1>Mes parties </h1>
 
-
-
-<div class="container">
- <div class="row">
-  <div class="col bg-secondary"">
-  <h2>Session {{list[0].Session.nom~" du "~list[0].Session.date|date}}</h2>
-  <p>Liste de match disponibles:</p>            
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Regle</th>
-        <th>film</th>
-        <th>lien</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-       
-      {% for liste in list %}
-      </tr>
-          <td> {{liste.regle}}</td>
-          <td> {{liste.regle.film}}</td>
-          <td> <a class="btn btn-info" href="{{path("matchencours")}}">Matcher</a></td>
-      </tr>
-      {%  endfor %}
-    </tbody>
-  </table>
-  
+{% if list is empty %}
+  <div class="bg-danger">
+      <h1> Désolé pas de match pour cette session </h1>
   </div>
 
-</div>
+{% else %}
+
+  <div class="container">
+  <div class="row">
+    <div class="col bg-secondary"">
+    <h2>Session {{list[0].Session.nom~" du "~list[0].Session.date|date("m/d/Y")}}</h2>
+    <a class="btn btn-info" href="{{path("matchencours",{user:app.request.query.get('user') ,session:app.request.query.get('session')})}}">Matcher</a>
+    <p>Liste de match disponibles:</p>            
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Regle</th>
+          <th>film</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        {% for liste in list %}
+        </tr>
+            <td> {{liste.regle}}  </td>
+            <td> {{liste.regle.film}}</td>
+          
+        </tr>
+        {%  endfor %}
+      </tbody>
+    </table>
+    {% for message in app.flashes('count') %}
+      <div class="flash-notice">
+          {{ message }}
+      </div>
+  {% endfor %}
+    </div>
+
+  </div>
+{% endif %}
+
+
 
 {% endblock %}

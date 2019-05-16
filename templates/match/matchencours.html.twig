@@ -2,25 +2,19 @@
 
 {% block body %}
 
-mes parties 
-<pre>
-    {{ dump(sess) }}
-    {{ dump(list) }}
-</pre>
-
-
 
 <div class="container">
  <div class="row">
   <div class="col bg-secondary"">
-  <h2>Session {{list[0].Session.nom~" du "~list[0].Session.date|date}}</h2>
+  <h2>Session {{list[0].Session.nom~" du "~list[0].Session.date|date("m/d/Y")}}</h2>
   <p>Liste de match disponibles:</p>            
   <table class="table table-striped">
     <thead>
       <tr>
         <th>Regle</th>
-        <th>film</th>
-        <th>lien</th>
+        <th>Film</th>
+        <th>Action</th>
+        <th>Nb Matches</th>
       </tr>
     </thead>
     <tbody>
@@ -28,9 +22,15 @@ mes parties
        
       {% for liste in list %}
       </tr>
+{% if app.session.get("count"~liste.id) is empty %}
+  {{app.request.session.set("count"~liste.id,0)}}
+{% endif %}
           <td> {{liste.regle}}</td>
           <td> {{liste.regle.film}}</td>
-          <td> <a class="btn btn-info" href="{{liste.regle~liste.regle.film}}"</td>
+          <td> <a class="btn btn-info" href="{{path('matchencours',{user:app.request.query.get('user') ,session:app.request.query.get('session'),match:liste.id})}}">Matcher </a></td>
+          <td>{{app.session.get("count"~liste.id)}} 
+
+          </td>
       </tr>
       {%  endfor %}
     </tbody>

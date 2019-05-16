@@ -6,6 +6,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\MatchRepository")
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Match 
 {
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -76,4 +79,5 @@ class Match
 
         return $this;
     }
+
 }

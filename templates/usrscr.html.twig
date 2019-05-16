@@ -1,0 +1,19 @@
+<script>
+        $(document).ready(function(){
+        
+            $.get("api/matches", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbmc").append(txt2).animate({left: '250px'}, "slow");;
+            console.log(data["hydra:totalItems"]);
+            });
+
+            $.get("api/participants", function(data, status){
+            var txt2 = $("<p></p>").text(data["hydra:totalItems"]);    
+            $("#nbmm").append(txt2);
+            console.log(data["hydra:totalItems"]);
+            });
+
+
+       
+        });
+    </script>
